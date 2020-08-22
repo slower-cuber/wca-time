@@ -60,12 +60,13 @@ def plot_correlation(event_x, event_y):
     y = data['e2'].values
 
     predictions, score, msg = get_regression(x, y)
+    corr = np.corrcoef(x, y)[0][1]
 
     ax = sns.scatterplot(x='e1', y='e2', data=data,
                          s=10)
     sns.lineplot(predictions[0], predictions[1], color='r', ax=ax)
 
-    ax.text(s=f'{len(time_points)} records, R^2 = {score}',
+    ax.text(s=f'{len(time_points)} records, r={corr}, R^2 = {score}',
             x=0.5, y=1.08, ha='center', va='bottom', transform=ax.transAxes)
     ax.text(s=msg,
             x=0.5, y=1.03, ha='center', va='bottom', transform=ax.transAxes)

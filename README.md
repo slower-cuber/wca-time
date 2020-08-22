@@ -22,3 +22,20 @@ Clock : 8715
 5x5x5 Blindfolded : 576
 ```
 
+## Code
+```
+$ pip install -r requirements.txt
+
+# $0 <event x> <event y> , notice the quotes
+$ python plot_events.py "3x3x3 Cube" "5x5x5 Cube"
+```
+
+### valid event
+```
+VALID_EVENTS = [
+    '2x2x2 Cube', '3x3x3 Blindfolded', '3x3x3 Cube', '3x3x3 Fewest Moves', '3x3x3 One-Handed',
+    '3x3x3 With Feet', '4x4x4 Blindfolded', '4x4x4 Cube', '5x5x5 Blindfolded', '5x5x5 Cube',
+    '6x6x6 Cube', '7x7x7 Cube', 'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square-1',
+]
+```
+
