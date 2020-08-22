@@ -5,9 +5,10 @@ import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
-from matplotlib.ticker import FormatStrFormatter
+import numpy as np
 import pandas as pd
 import seaborn as sns
+from sklearn.linear_model import LinearRegression
 
 DATA_DIR = 'comp_event_time'
 
@@ -26,6 +27,22 @@ def parse_args():
     return parser.parse_args()
 
 
+def get_regression(x, y):
+    X = x.reshape(-1, 1)  # array of feature array; in this case only 1 feature
+    regressor = LinearRegression()
+    reg = regressor.fit(X, y)
+
+    pred_x = np.linspace(min(x) - 0.5, max(x) + 0.5 , 100)
+    pred_y = reg.predict(pred_x.reshape(-1, 1))
+    score = reg.score(X, y)
+
+    slope = reg.coef_[0]
+    intercept = reg.intercept_
+    msg = f'e2 = {slope} x e1 + ({intercept})'
+
+    return (pred_x, pred_y), score, msg
+
+
 def plot_correlation(event_x, event_y):
     time_points = []
     for event_f in Path(DATA_DIR).glob('*.jsonl'):
@@ -38,9 +55,20 @@ def plot_correlation(event_x, event_y):
                     time_points.append([float(time_x), float(time_y)])
 
     data = pd.DataFrame(time_points, columns=['e1', 'e2'])
-    ax = sns.scatterplot(x='e2', y='e1', data=data)
+
+    x = data['e1'].values
+    y = data['e2'].values
+
+    predictions, score, msg = get_regression(x, y)
+
+    ax = sns.scatterplot(x='e1', y='e2', data=data,
+                         s=10)
+    sns.lineplot(predictions[0], predictions[1], color='r', ax=ax)
 
     plt.show()
+
+    print(score)
+    print(msg)
     print(len(time_points))
 
 
