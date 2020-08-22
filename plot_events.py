@@ -65,11 +65,14 @@ def plot_correlation(event_x, event_y):
                          s=10)
     sns.lineplot(predictions[0], predictions[1], color='r', ax=ax)
 
-    plt.show()
+    ax.text(s=f'{len(time_points)} records, R^2 = {score}',
+            x=0.5, y=1.08, ha='center', va='bottom', transform=ax.transAxes)
+    ax.text(s=msg,
+            x=0.5, y=1.03, ha='center', va='bottom', transform=ax.transAxes)
 
-    print(score)
-    print(msg)
-    print(len(time_points))
+    plt.xlabel(f'e1 {event_x}')
+    plt.ylabel(f'e2 {event_y}')
+    plt.show()
 
 
 def list_events():
