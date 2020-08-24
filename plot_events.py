@@ -38,7 +38,7 @@ def get_regression(x, y):
 
     slope = reg.coef_[0]
     intercept = reg.intercept_
-    msg = f'e2 = {slope} x e1 + ({intercept})'
+    msg = f'e2 = {slope:.3f} x e1 + ({intercept:.3f})'
 
     return (pred_x, pred_y), score, msg
 
@@ -66,7 +66,7 @@ def plot_correlation(event_x, event_y):
                          s=10)
     sns.lineplot(predictions[0], predictions[1], color='r', ax=ax)
 
-    ax.text(s=f'{len(time_points)} records, r={corr}, R^2 = {score}',
+    ax.text(s=f'{len(time_points)} records, r={corr:.4f}, R^2 = {score:.4f}',
             x=0.5, y=1.08, ha='center', va='bottom', transform=ax.transAxes)
     ax.text(s=msg,
             x=0.5, y=1.03, ha='center', va='bottom', transform=ax.transAxes)
